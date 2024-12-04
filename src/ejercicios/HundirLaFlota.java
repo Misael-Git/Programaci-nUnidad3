@@ -11,12 +11,11 @@ public class HundirLaFlota {
             {'-', 'b', '-', '-', '-', '-', '-', '-'},
             {'-', 'b', '-', '-', '-', '-', '-', '-'},
             {'-', 'b', '-', '-', '-', '-', '-', '-'},
-            {'-', '-', 'b', 'b', 'b', 'b', 'b', '-'},
+            {'-', '-', '-', 'b', 'b', 'b', 'b', 'b'},
             {'-', '-', '-', '-', '-', '-', '-', '-'},
             {'b', 'b', 'b', '-', '-', '-', '-', '-'},
             {'-', '-', '-', '-', '-', '-', 'b', 'b'}
         };
-        boolean errorEsquinas = false;
         int barcos = 1;
         int barcosCount = 0;
         Scanner teclado = new Scanner(System.in);
@@ -52,11 +51,14 @@ public class HundirLaFlota {
         }
 
         // COMPROBACIONES
-        boolean[][] procesado = new boolean[8][8]; // Para evitar modificar el tablero original
+        boolean[][] procesado = new boolean[8][8]; 
+        // Procesado es un mapa paralelo al original, en el que cada casilla almacena la información
+        // de si ha sido procesado. Sirve para marcar qué partes del tablero ya hemos revisado,
+        // así no volvemos a mirar el mismo barco más de una vez
 
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                if (tablero[y][x] == 'b' && !procesado[y][x]) {
+                if (tablero[y][x] == 'b' && !procesado[y][x]) { // Si es barco y no lo ha procesado aún
                     int tamañoBarco = 1;
                     boolean horizontal = false, vertical = false;
 
@@ -83,16 +85,25 @@ public class HundirLaFlota {
                     }
 
                     // ESQUINAS
-                    if (y + 1 < 8 && x + 1 < 8 && tablero[y + 1][x + 1] == 'b') {
-                        errorEsquinas = true;
-                    }
-                    if (y + 1 < 8 && x - 1 >= 0 && tablero[y + 1][x - 1] == 'b') {
-                        errorEsquinas = true;
-                    }
+                    int[] dx = {-1, 1, -1, 1}; // Posibles movimientos diagonales
+                    int[] dy = {-1, -1, 1, 1}; // Posibles movimientos diagonales
+                    for (int i = 0; i < 4; i++) {
+                    	// Este bucle comprueba  4 posibilidades:
+                    	// Esquina superior izquierda.
+                    	// Esquina superior derecha.
+                    	// Esquina inferior izquierda.
+                    	// Esquina inferior derecha.
+                        int nuevoX = x + dx[i];
+                        int nuevoY = y + dy[i];
+                        if (nuevoX >= 0 && nuevoX < 8 && nuevoY >= 0 && nuevoY < 8 &&
+                        		tablero[nuevoY][nuevoX] == 'b') {
+                            // La primera parte comprueba que las coordenadas de la esquina
+                        	// estén dentro del tablero, y la segunda parte comprueba que
+                        	// alguna de esas 4 sean b
 
-                    if (errorEsquinas) {
-                        System.out.println("Error: Barcos tocando esquinas");
-                        return;
+                        	System.out.println("Error: Barcos tocando esquinas");
+                            return;
+                        }
                     }
 
                     // Registrar el barco
@@ -108,6 +119,7 @@ public class HundirLaFlota {
             }
         }
 
+
         // COMPROBACIONES FINALES
         if (barcosCount == 5 && barcos == 360) {
             System.out.println("Todo salió bien!!! Aquí está tu tablero:");
@@ -119,6 +131,7 @@ public class HundirLaFlota {
             }
         } else {
             System.out.println("Error: La configuración no cumple con los requisitos.");
+            System.out.println(barcos + " y " + barcosCount);
         }
 
         teclado.close();
