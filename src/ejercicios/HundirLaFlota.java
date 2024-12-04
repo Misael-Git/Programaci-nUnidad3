@@ -63,18 +63,18 @@ public class HundirLaFlota {
                     boolean horizontal = false, vertical = false;
 
                     // HORIZONTAL
-                    if (x + 1 < 8 && tablero[y][x + 1] == 'b') {
+                    if (x + 1 < 8 && tablero[y][x + 1] == 'b') { // Si no se sale del tablero el siguiente, y si es b
                         horizontal = true;
-                        while (x + tamañoBarco < 8 && tablero[y][x + tamañoBarco] == 'b') {
+                        while (x + tamañoBarco < 8 && tablero[y][x + tamañoBarco] == 'b') { // Aumenta hasta que no sea b
                             tamañoBarco++;
                         }
                     }
 
                     // VERTICAL
-                    if (y + 1 < 8 && tablero[y + 1][x] == 'b') {
+                    if (y + 1 < 8 && tablero[y + 1][x] == 'b') { // Si no se sale del tablero el siguiente, y si es b
                         vertical = true;
                         tamañoBarco = 1; // Reiniciar para contar vertical
-                        while (y + tamañoBarco < 8 && tablero[y + tamañoBarco][x] == 'b') {
+                        while (y + tamañoBarco < 8 && tablero[y + tamañoBarco][x] == 'b') { // Aumenta hasta que no sea b
                             tamañoBarco++;
                         }
                     }
@@ -112,6 +112,8 @@ public class HundirLaFlota {
 
                     // Marcar las posiciones como procesadas
                     for (int i = 0; i < tamañoBarco; i++) {
+                    	// Si el barco que se vio es horizontal, se da como procesado esa casilla y las demás
+                    	// hasta cubrir el barco entero
                         if (horizontal) procesado[y][x + i] = true;
                         if (vertical) procesado[y + i][x] = true;
                     }
@@ -131,7 +133,7 @@ public class HundirLaFlota {
             }
         } else {
             System.out.println("Error: La configuración no cumple con los requisitos.");
-            System.out.println(barcos + " y " + barcosCount);
+            System.out.println("(" + barcos + "/360) puntos y " + barcosCount + " barcos detectados");
         }
 
         teclado.close();

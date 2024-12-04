@@ -1,4 +1,4 @@
-package ejercicios;
+package hundirLaFLotaIntentos;
 
 import java.util.Scanner;
 
