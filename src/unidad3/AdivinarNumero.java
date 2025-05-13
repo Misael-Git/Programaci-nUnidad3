@@ -8,7 +8,7 @@ public class AdivinarNumero {
 
 		int numRandom = (int) (Math.random()*50+1);
 		int numIntentos = 5;
-		int num = 0;
+		int num = 0; 
 		boolean encontrado = false;
 		
 		Scanner teclado = new Scanner(System.in);
