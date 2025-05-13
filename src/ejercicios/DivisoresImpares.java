@@ -21,6 +21,6 @@ public class DivisoresImpares {
             }
         }
         teclado.close();
-	} // ACTU
-
+	} // ACTU 2
+ 
 }
