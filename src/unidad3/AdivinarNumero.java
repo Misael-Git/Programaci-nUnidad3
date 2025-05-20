@@ -31,7 +31,9 @@ public class AdivinarNumero {
 				System.out.println("Sube");
 			}
 		}		
-				
+		
+		System.out.println("Cambio para merge 1");
+		
 		teclado.close();
 	}
 
