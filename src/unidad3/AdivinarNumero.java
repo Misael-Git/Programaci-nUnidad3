@@ -33,6 +33,7 @@ public class AdivinarNumero {
 		}		
 		
 		System.out.println("Cambio para merge 1");
+		System.out.println("Cambio para merge 2");
 		
 		teclado.close();
 	}
